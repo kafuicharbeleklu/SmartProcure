@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartProcure - Analyse Offres Fournisseurs (Service Achat – Finance)</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        /* IBM CARBON DESIGN SYSTEM PALETTE */
+        
+        /* Primary: Blue 60 (#0f62fe) */
+        --color-primary: #0f62fe; 
+        --color-on-primary: #ffffff;
+        --color-primary-container: #d0e2ff; 
+        --color-on-primary-container: #001141;
+
+        /* Secondary: Gray 80 (#393939) */
+        --color-secondary: #393939;
+        --color-on-secondary: #ffffff;
+        --color-secondary-container: #e0e0e0;
+        --color-on-secondary-container: #161616;
+
+        /* Tertiary: Teal 60 (#005d5d) */
+        --color-tertiary: #005d5d;
+        --color-on-tertiary: #ffffff;
+        --color-tertiary-container: #9ef0f0;
+        --color-on-tertiary-container: #001111;
+        
+        /* Error/Red: Red 60 (#da1e28) */
+        --color-error: #da1e28;
+        --color-on-error: #ffffff;
+        --color-error-container: #ffd7d9;
+        --color-on-error-container: #750e13;
+
+        /* Backgrounds (Carbon Light Theme - White / Gray 10) */
+        --color-background: #f4f4f4; /* Gray 10 */
+        --color-on-background: #161616; /* Gray 100 */
+
+        --color-surface: #ffffff; /* White */
+        --color-on-surface: #161616; /* Gray 100 */
+        --color-surface-variant: #e0e0e0; /* Gray 20 */
+        --color-on-surface-variant: #525252; /* Gray 70 */
+
+        --color-surface-container-lowest: #ffffff;
+        --color-surface-container-low: #f4f4f4;
+        --color-surface-container: #e0e0e0;
+        --color-surface-container-high: #c6c6c6;
+        --color-surface-container-highest: #a8a8a8;
+
+        --color-outline: #8d8d8d; /* Gray 50 */
+        --color-outline-variant: #c6c6c6; /* Gray 30 */
+      }
+
+      body {
+        font-family: 'IBM Plex Sans', sans-serif;
+        background-color: var(--color-background);
+        color: var(--color-on-surface);
+      }
+
+      /* Micro-interactions Utilities */
+      .hover-scale {
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .hover-scale:hover {
+        transform: scale(1.02);
+      }
+      .hover-scale-sm {
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .hover-scale-sm:hover {
+        transform: scale(1.05);
+      }
+      .active-press {
+        transition: transform 0.1s ease;
+      }
+      .active-press:active {
+        transform: scale(0.96);
+      }
+      
+      .shimmer-bg {
+        background: linear-gradient(105deg, var(--color-primary-container) 40%, rgba(255, 255, 255, 0.5) 50%, var(--color-primary-container) 60%);
+        background-size: 200% auto;
+        animation: shimmer 4s infinite linear;
+      }
+      
+      /* Stagger Delays */
+      .delay-50 { animation-delay: 50ms; }
+      .delay-100 { animation-delay: 100ms; }
+      .delay-150 { animation-delay: 150ms; }
+      .delay-200 { animation-delay: 200ms; }
+      .delay-300 { animation-delay: 300ms; }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: var(--color-outline-variant);
+        border-radius: 20px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-outline);
+      }
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-outline-variant) transparent;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "html2canvas": "https://esm.sh/html2canvas@^1.4.1",
+    "jspdf": "https://esm.sh/jspdf@^2.5.1",
+    "@material/material-color-utilities": "https://esm.sh/@material/material-color-utilities@0.2.7"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-background text-on-surface transition-colors duration-200">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
