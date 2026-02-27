@@ -2,7 +2,12 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { SupplierOffer, AnalysisResult } from "../types";
 
 // Initialize Gemini Client
-const apiKey = (import.meta.env.VITE_GEMINI_API_KEY || '').trim();
+const ENV_API_KEY = (import.meta.env.VITE_GEMINI_API_KEY || '').trim();
+const STORAGE_API_KEY_KEY = 'smartprocure_gemini_api_key';
+const STORED_API_KEY = typeof window !== 'undefined'
+  ? (localStorage.getItem(STORAGE_API_KEY_KEY) || '').trim()
+  : '';
+const apiKey = ENV_API_KEY || STORED_API_KEY;
 const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 // --- Simple In-Memory Cache ---
@@ -580,6 +585,29 @@ export const analyzeSupplierOffers = async (
 
   } catch (err: any) {
     console.error("Analysis Error:", err);
-    throw new Error(err.message || "Erreur technique lors de l'analyse.");
+    const rawMessage = String(err?.message || '');
+
+    if (/API_KEY_INVALID|API key not valid|invalid api key/i.test(rawMessage)) {
+      throw new Error(
+        language === 'fr'
+          ? "Cle API Gemini invalide. Generez une nouvelle cle dans Google AI Studio, activez le service Generative Language API, puis mettez-la dans `VITE_GEMINI_API_KEY`."
+          : "Invalid Gemini API key. Create a new key in Google AI Studio, enable Generative Language API, then set `VITE_GEMINI_API_KEY`."
+      );
+    }
+
+    if (/PERMISSION_DENIED|SERVICE_DISABLED|API_KEY_SERVICE_BLOCKED|referer|referrer/i.test(rawMessage)) {
+      throw new Error(
+        language === 'fr'
+          ? "La cle API est restreinte ou le service Gemini n'est pas actif pour ce projet. Verifiez les restrictions de cle et activez Generative Language API."
+          : "The API key is restricted or Gemini service is not enabled for this project. Check key restrictions and enable Generative Language API."
+      );
+    }
+
+    throw new Error(
+      err.message ||
+      (language === 'fr'
+        ? "Erreur technique lors de l'analyse."
+        : "Technical error while running analysis.")
+    );
   }
 };
